@@ -9,7 +9,7 @@ your session will be stored in appstate.json.
 The pull in startscript will pull from this repo
 
 To add custom commands either:
-Follow the way done in commands.js
-OR
-Add it to custom_commands.json with the file key being the script to be run
+Follow the way done in commands.js\n
+OR\n
+Add it to custom_commands.json with the file key being the script to be run\n
 Look at the example-command already in there
