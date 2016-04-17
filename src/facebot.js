@@ -47,7 +47,6 @@ function doLogin(loginData){
 	      selfListen: true,
 	      forceLogin:true,
 	      listenEvents: true,
-	      disableDelta: false,
 	      logLevel:"silent"
 
 	    });
