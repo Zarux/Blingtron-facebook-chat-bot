@@ -466,7 +466,7 @@ function getSpecialValue(arg, args){
 
 function sendPhotoFromUrl(threadID, msg, imgurl, fileName, error){
 	var api = command.meta.api;
-	var fileName = "../images/"+fileName;
+	var fileName = "./images/"+fileName;
 	request(imgurl).on('response',function(response){
 		if(response.statusCode!=200){
 			var message = uf.prettifyMessage(null,strftime('%F %T'),"DEBUG","Got status "+response.statusCode);

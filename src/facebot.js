@@ -2,6 +2,7 @@ var login    = require("facebook-chat-api");
 var $        = require("jquery");
 var request  = require('request');
 var fs       = require("fs")
+var path     = require('path');
 var strftime = require('strftime');
 var unirest  = require('unirest');
 var log      = require('npmlog');
@@ -15,6 +16,7 @@ var rl = readline.createInterface({
 	output: process.stdout
 });
 
+process.chdir(path.dirname(fs.realpathSync(__dirname)));
 var loginData;
 try{
 	loginData = {appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))};
