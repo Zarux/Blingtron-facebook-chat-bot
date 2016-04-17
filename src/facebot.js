@@ -52,6 +52,7 @@ function doLogin(loginData){
 
 	    });
 	    cmdM['meta']['api'] = api;
+	    uf.metaData.meta.api = api;
 	 
 	 	log.info("Begin listening for messages");
 	    var listening = api.listen(function(err, event) {
@@ -87,7 +88,7 @@ function doLogin(loginData){
 		    	});
 		    	if(!event.body)
 			  		return;
-			    if(event.body.indexOf("!")=='0' && event.senderID != myId) {
+			    if(event.senderID != myId) {
 			    	var command   = event.body.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/g);
 			    	var cmd       = command[0];
 			    	var args      = command.slice(1,command.length);

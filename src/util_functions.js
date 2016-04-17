@@ -1,3 +1,16 @@
+var login = require("facebook-chat-api");
+var $ = require("jquery");
+var request = require('request');
+var fs = require("fs")
+var strftime = require('strftime');
+var unirest = require('unirest');
+var log = require('npmlog');
+
+var command = {
+	meta :{
+		api: null
+	}
+}
 
 String.prototype.replaceAt=function(index, character) {
     return this.substr(0, index) + character + this.substr(index+character.length);
@@ -35,7 +48,60 @@ function prettifyMessage(type,time,sender,mesg){
 	return message;
 }
 
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function getSpecialValue(arg, args){
+	var specialValue = args['special_value'][arg];
+	return specialValue;
+}
+
+function sendPhotoFromUrl(threadID, msg, imgurl, fileName, error){
+	var api = command.meta.api;
+	var fileName = "./images/"+fileName;
+	request(imgurl).on('response',function(response){
+		if(response.statusCode!=200){
+			var message = prettifyMessage(null,strftime('%F %T'),"DEBUG","Got status "+response.statusCode);
+			log.error(message);
+			if(typeof(error) == "function"){
+				error();
+			}
+			return false;
+		}
+	}).pipe(fs.createWriteStream(fileName)).on('close',function(){
+		var message = {
+ 			attachment: fs.createReadStream(fileName),
+ 			body: ""
+		};
+		if(msg){
+			message['body']+=msg;
+		}
+    	sendMessage(message, threadID);
+    	fs.unlink(fileName);
+    	return true;
+	});
+}
+
+function sendMessage(message, threadID, error){
+	var api = command.meta.api;
+	api.sendMessage(message, threadID,function(err, info){
+		if(err){
+			var message = prettifyMessage(null,strftime('%F %T'),"DEBUG","Error when sending message: "+err.errorDescription);
+			log.error(message);
+			if(typeof(error) == "function"){
+				error();
+			}
+		}
+	});
+}
+
 module.exports = {
-	prettifyMessage : prettifyMessage,
-	isInArray       : isInArray
+	prettifyMessage  : prettifyMessage,
+	isInArray        : isInArray,
+	getRandomInt     : getRandomInt,
+	getSpecialValue  : getSpecialValue,
+	sendPhotoFromUrl : sendPhotoFromUrl,
+	sendMessage      : sendMessage,
+	metaData         : command
 }

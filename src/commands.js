@@ -87,6 +87,7 @@ var command = {
 	}
 }
 
+
 /*
 *******************
 **               **
@@ -116,7 +117,7 @@ command['!help'].run = function(threadID, args){
 		var value   = args.value[0];
 	else{
 		message.body+=command[args.cmd].help;
-		sendMessage(message,threadID);
+		uf.sendMessage(message,threadID);
 		return
 	}
 
@@ -129,7 +130,7 @@ command['!help'].run = function(threadID, args){
 	}else{
 		message.body+="Not a command";
 	}
-	sendMessage(message,threadID);
+	uf.sendMessage(message,threadID);
 }
 
 command['!desc'].run = function(threadID, args){
@@ -139,7 +140,7 @@ command['!desc'].run = function(threadID, args){
 		var value   = args.value[0];
 	else{
 		message.body+=command[args.cmd].desc;
-		sendMessage(message,threadID);
+		uf.sendMessage(message,threadID);
 		return
 	}
 	if(command.meta.isCommand(value)){	
@@ -151,7 +152,7 @@ command['!desc'].run = function(threadID, args){
 	}else{
 		message.body+="Not a command";
 	}
-	sendMessage(message,threadID);
+	uf.sendMessage(message,threadID);
 }
 
 command['!cmnds'].run = function(threadID, args){
@@ -165,15 +166,15 @@ command['!cmnds'].run = function(threadID, args){
 			message.body += cmd+"\n";
 		}
 	}
-	sendMessage(message,threadID);
+	uf.sendMessage(message,threadID);
 }
 
 command['!test'].run = function(threadID,args){
 	var api = command.meta.api;
 	var special = args['special'][args.special.indexOf("--user")];
-	var specialValue = getSpecialValue(special,args);
+	var specialValue = uf.getSpecialValue(special,args);
 	var message = special+" "+specialValue;
-	sendMessage(message,threadID);
+	uf.sendMessage(message,threadID);
 }
 
 
@@ -214,7 +215,7 @@ command['!hs'].run = function(threadID,args){
 		function send(){
 			var data = getNextData();
 			if(!data){
-				sendMessage("Nothing found", threadID);
+				uf.sendMessage("Nothing found", threadID);
 				return;
 			}
 
@@ -251,9 +252,9 @@ command['!hs'].run = function(threadID,args){
 				else
 					mesg = "You like what you see?";
 			}	
-			sendPhotoFromUrl(threadID, mesg, cardimgurl,fileName,function(){
+			uf.sendPhotoFromUrl(threadID, mesg, cardimgurl,fileName,function(){
 				var errorMsg = "Could not fetch "+(gold ? "gold " : "")+"image for "+cardname;
-				sendMessage(message, threadID);
+				uf.sendMessage(message, threadID);
 			});
 			
 		}
@@ -279,7 +280,7 @@ command['!stock'].run = function(threadID,args){
 		for(i in result){
 			if(i == 0)continue;
 			if(result[i].symbol == null){
-				sendMessage("No symbol", threadID);	
+				uf.sendMessage("No symbol", threadID);	
 				return
 			}
 			var resObj ={
@@ -309,7 +310,7 @@ command['!stock'].run = function(threadID,args){
 			}
 			message['body'] += "--------\n";
 		}
-		sendMessage(message, threadID);	
+		uf.sendMessage(message, threadID);	
 	});	
 }
 
@@ -321,7 +322,7 @@ command['!quote'].run = function(threadID, args){
 		var moviesQ = args.special.indexOf("--movies");
 		if(famousQ > -1 || moviesQ > -1){
 			var category;
-			var random = getRandomInt(0,2);
+			var random = uf.getRandomInt(0,2);
 
 			if(random == 1){
 				category = "famous"
@@ -336,9 +337,9 @@ command['!quote'].run = function(threadID, args){
 			.end(function (result) {
 			  if(result.status == 200){
 			  	result.body = JSON.parse(result.body);
-			  	sendMessage("\""+result.body.quote+"\"\n- "+result.body.author, threadID);
+			  	uf.sendMessage("\""+result.body.quote+"\"\n- "+result.body.author, threadID);
 			  }else{
-			  	sendMessage("No quote found. Try again later", threadID);
+			  	uf.sendMessage("No quote found. Try again later", threadID);
 			  }
 			});
 			return;
@@ -346,7 +347,7 @@ command['!quote'].run = function(threadID, args){
 		var count = [];
 		fs.writeFile('./dump1.txt', JSON.stringify(history, null, 2) , 'utf-8');
 		function getRandomMessage(count){
-			var idx     = getRandomInt(0,history.length);
+			var idx     = uf.getRandomInt(0,history.length);
 			var message = {body: ""};
 			var quote   = history[idx].body;
 			var msgTime = strftime('%d-%m-%Y', new Date(history[idx].timestamp*1));
@@ -360,14 +361,14 @@ command['!quote'].run = function(threadID, args){
 				history[idx].senderName = "Anonymous";
 			}
 			if(count.length == history.length){
-				sendMessage("Sorry, i failed to find something.",threadID);
+				uf.sendMessage("Sorry, i failed to find something.",threadID);
 				return true;
 			}
 			if (history[idx].senderID == "fbid:"+api.getCurrentUserID()){
 				return false;
 			}
 			if(args.special.indexOf('--user') > -1){
-				var user = getSpecialValue("--user",args);
+				var user = uf.getSpecialValue("--user",args);
 				if(history[idx].senderName.toLowerCase() != user.toLowerCase()){
 					return false;
 				}
@@ -379,7 +380,7 @@ command['!quote'].run = function(threadID, args){
 
 			if(attachment.length > 0){
 				if(attachment[0].type == 'photo' && history[idx].senderID != "fbid:"+api.getCurrentUserID()){
-					sendPhotoFromUrl(threadID, history[idx].senderName+"\n("+msgTime+")", attachment[0].hiresUrl,attachment[0].name+".png");
+					uf.sendPhotoFromUrl(threadID, history[idx].senderName+"\n("+msgTime+")", attachment[0].hiresUrl,attachment[0].name+".png");
 					return true;
 				}else{
 					return false;
@@ -389,7 +390,7 @@ command['!quote'].run = function(threadID, args){
 				return false;
 			}		
 			message['body']+= "\""+history[idx].body+"\"\n - "+history[idx].senderName+"\n ("+msgTime+")";
-			sendMessage(message,threadID);
+			uf.sendMessage(message,threadID);
 			return true;	
 		}
 		for (var i = 0; i < history.length; i++) {
@@ -407,11 +408,11 @@ command['!cat'].run = function(threadID){
 	function getCat(){
 		count++;
 		if(count == 100){
-			sendMessage("No cat found",threadID);	
+			uf.sendMessage("No cat found",threadID);	
 			return;
 		}
-		if(getRandomInt(0,2) == 1){
-			sendPhotoFromUrl(threadID,null,"http://thecatapi.com/api/images/get?format=src&type=gif",(Math.random() + 1).toString(36).substring(7)+".gif",function(){
+		if(uf.getRandomInt(0,2) == 1){
+			uf.sendPhotoFromUrl(threadID,null,"http://thecatapi.com/api/images/get?format=src&type=gif",(Math.random() + 1).toString(36).substring(7)+".gif",function(){
 				getCat();
 			})
 			return;
@@ -421,7 +422,7 @@ command['!cat'].run = function(threadID){
 		.header("Accept", "application/json")
 		.end(function (result) {
 		  if(result.status == 200 && result.body){
-		  	sendPhotoFromUrl(threadID, null, result.body.source, (Math.random() + 1).toString(36).substring(7)+".png",function(){
+		  	uf.sendPhotoFromUrl(threadID, null, result.body.source, (Math.random() + 1).toString(36).substring(7)+".png",function(){
 		  		getCat();
 		  	});
 		  }else{
@@ -441,7 +442,7 @@ command['!shutdown'].run = function(threadID, args, senderID){
 command['!random'].run = function(threadID,args,senderID){
 	function getRandomCommand(){
 		var randomCommand = Object.keys(command);
-		return randomCommand[getRandomInt(0,randomCommand.length)];
+		return randomCommand[uf.getRandomInt(0,randomCommand.length)];
 	}
 	function runRandomCommand(){
 		var commandToRun = getRandomCommand();
@@ -455,52 +456,31 @@ command['!random'].run = function(threadID,args,senderID){
 	}
 	runRandomCommand();
 }
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
-}
 
-function getSpecialValue(arg, args){
-	var specialValue = args['special_value'][arg];
-	return specialValue;
-}
 
-function sendPhotoFromUrl(threadID, msg, imgurl, fileName, error){
-	var api = command.meta.api;
-	var fileName = "./images/"+fileName;
-	request(imgurl).on('response',function(response){
-		if(response.statusCode!=200){
-			var message = uf.prettifyMessage(null,strftime('%F %T'),"DEBUG","Got status "+response.statusCode);
-			log.error(message);
-			if(typeof(error) == "function"){
-				error();
-			}
-			return false;
-		}
-	}).pipe(fs.createWriteStream(fileName)).on('close',function(){
-		var message = {
- 			attachment: fs.createReadStream(fileName),
- 			body: ""
-		};
-		if(msg){
-			message['body']+=msg;
-		}
-    	sendMessage(message, threadID);
-    	fs.unlink(fileName);
-    	return true;
-	});
-}
+var custom_commands = JSON.parse(fs.readFileSync('src/custom_commands.json', 'utf8'));
 
-function sendMessage(message, threadID, error){
-	var api = command.meta.api;
-	api.sendMessage(message, threadID,function(err, info){
-		if(err){
-			var message = uf.prettifyMessage(null,strftime('%F %T'),"DEBUG","Error when sending message: "+err.errorDescription);
-			log.error(message);
-			if(typeof(error) == "function"){
-				error();
+for(cmd in custom_commands){
+	command[cmd]={};
+	cm = command[cmd];
+	if(custom_commands[cmd].help)
+		cm.help = custom_commands[cmd].help;
+	if(custom_commands[cmd].desc)
+		cm.desc = custom_commands[cmd].desc;
+	if(custom_commands[cmd].inuse)
+		cm.inuse = custom_commands[cmd].inuse;
+	else
+		cm.inuse = true;
+	if(custom_commands[cmd].file){
+		cm.run=function(threadID,args,senderID){
+			try{
+				var doRun = require("../custom_commands/"+custom_commands[cmd].file);
+				doRun(threadID,args,senderID);
+			}catch(e){
+				var message = uf.prettifyMessage(null,strftime('%F %T'),"DEBUG",e.message);
+				log.error(message);
 			}
 		}
-	});
+	}
 }
-
 module.exports = command;
