@@ -27,14 +27,14 @@ module.exports=function(threadID, args, senderId){
 		  })
 		  return tmpList[~~(Math.random()*tmpList.length)]
 		}
-		var quotes = new MarkovChain(historyString)
-		var randomLength = uf.getRandomInt(5,100);
-
+		var quotes = new MarkovChain(historyString);
+		
 		var start = useUpperCase;
 		if(args.value.length>0 && !useUser){
 			start = args.value[0];
 		}
 
-		uf.sendMessage(quotes.start(start).end().process(),threadID);
+		uf.sendMessage(quotes.start(start).end(25).process(),threadID);
 	});
 }
+
