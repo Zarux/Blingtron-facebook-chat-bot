@@ -31,7 +31,7 @@ module.exports=function(threadID, args, senderId){
 		var randomLength = uf.getRandomInt(5,100);
 
 		var start = useUpperCase;
-		if(args.value.length>0){
+		if(args.value.length>0 && !useUser){
 			start = args.value[0];
 		}
 
