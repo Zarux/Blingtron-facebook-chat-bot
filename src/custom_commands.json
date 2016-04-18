@@ -2,5 +2,9 @@
 	"!custom-example":{
 		"file":"testCommand.js",
 		"desc":"asdasd"
+	},
+	"!talk":{
+		"file":"markovChain.js",
+		"desc":"Generate markovChain from previous conversation"
 	}
 }
