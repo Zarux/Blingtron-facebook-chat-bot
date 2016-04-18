@@ -20,6 +20,11 @@ module.exports=function(threadID, args, senderId){
 		var quotes = new MarkovChain(historyString)
 		var randomLength = uf.getRandomInt(5,100);
 
-		uf.sendMessage(quotes.start(useUpperCase).end().process(),threadID);
+		var start = useUpperCase;
+		if(args.value.length>0){
+			start = args[0];
+		}
+
+		uf.sendMessage(quotes.start(start).end().process(),threadID);
 	});
 }
