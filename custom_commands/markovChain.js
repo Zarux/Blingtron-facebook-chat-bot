@@ -22,7 +22,7 @@ module.exports=function(threadID, args, senderId){
 
 		var start = useUpperCase;
 		if(args.value.length>0){
-			start = args[0];
+			start = args.value[0];
 		}
 
 		uf.sendMessage(quotes.start(start).end().process(),threadID);
