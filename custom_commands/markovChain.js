@@ -18,7 +18,7 @@ module.exports=function(threadID, args, senderId){
 			if(history[msg].senderID != "fbid:"+myId && history[msg].body!=undefined && history[msg].type=="message"){
 				if(useUser && history[msg].senderName.toLowerCase()!=user)
 					continue;
-				historyString+=history[msg].body+"\n";
+				historyString+=uf.capitalizeFirstLetter(history[msg].body.toLowerCase()+"\n");
 			}
 		}
 		function useUpperCase(wordList) {

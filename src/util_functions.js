@@ -15,6 +15,9 @@ var command = {
 String.prototype.replaceAt=function(index, character) {
     return this.substr(0, index) + character + this.substr(index+character.length);
 }
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 function isInArray(haystack,needle){
 	return haystack.indexOf(needle) > -1;
