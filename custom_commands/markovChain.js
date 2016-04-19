@@ -16,7 +16,7 @@ module.exports=function(threadID, args, senderId){
 		}
 		for(msg in history){
 			if(history[msg].senderID != "fbid:"+myId && history[msg].body!=undefined && history[msg].type=="message"){
-				if(useUser && history[msg].senderName!=user.toLowerCase())
+				if(useUser && history[msg].senderName.toLowerCase()!=user)
 					continue;
 				historyString+=history[msg].body+"\n";
 			}
