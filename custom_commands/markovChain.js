@@ -33,9 +33,9 @@ module.exports=function(threadID, args, senderId){
 			return tmpList[~~(Math.random()*tmpList.length)]
 		} 
 		var quotes = new MarkovChain(historyString);
-		var start = useRandom;
-		if(args.special.indexOf('--upper') > -1){
-			start = useUpperCase;
+		var start = useUpperCase;
+		if(args.special.indexOf('--rand') > -1){
+			start = useRandom;
 		}
 		
 		if(args.value.length>0 && !useUser){
