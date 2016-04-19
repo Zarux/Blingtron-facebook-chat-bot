@@ -21,13 +21,23 @@ module.exports=function(threadID, args, senderId){
 				historyString+=history[msg].body+"\n";
 			}
 		}
-		var useUpperCase = function(wordList) {
-		  var tmpList = Object.keys(wordList);
-		  return tmpList[~~(Math.random()*tmpList.length)]
+		function useUpperCase(wordList) {
+			var tmpList = Object.keys(wordList).filter(function(word) {
+				return word[0] >= 'A' && word[0] <= 'Z'
+			})
+			return tmpList[~~(Math.random()*tmpList.length)]
 		}
-		var quotes = new MarkovChain(historyString);
 
-		var start = useUpperCase;
+		function useRandom(wordList) {
+			var tmpList = Object.keys(wordList);
+			return tmpList[~~(Math.random()*tmpList.length)]
+		} 
+		var quotes = new MarkovChain(historyString);
+		var start = useRandom;
+		if(args.special.indexOf('--upper') > -1){
+			start = useUpperCase;
+		}
+		
 		if(args.value.length>0 && !useUser){
 			start = args.value[0];
 		}
