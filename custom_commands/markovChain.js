@@ -9,14 +9,14 @@ module.exports=function(threadID, args, senderId){
 		var user;
 		var useUser = false;
 		if(args.special.indexOf('--user') > -1){
-			var user = uf.getSpecialValue("--user",args);
+			var user = uf.getSpecialValue("--user",args).toLowerCase();
 			if(user!=undefined){
 				useUser = true;
 			}
 		}
 		for(msg in history){
 			if(history[msg].senderID != "fbid:"+myId && history[msg].body!=undefined && history[msg].type=="message"){
-				if(useUser && history[msg].senderName!=user)
+				if(useUser && history[msg].senderName!=user.toLowerCase())
 					continue;
 				historyString+=history[msg].body+"\n";
 			}
