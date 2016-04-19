@@ -22,13 +22,11 @@ module.exports=function(threadID, args, senderId){
 			}
 		}
 		var useUpperCase = function(wordList) {
-		  var tmpList = Object.keys(wordList).filter(function(word) {
-		    return word[0] >= 'A' && word[0] <= 'Z'
-		  })
+		  var tmpList = Object.keys(wordList);
 		  return tmpList[~~(Math.random()*tmpList.length)]
 		}
 		var quotes = new MarkovChain(historyString);
-		
+
 		var start = useUpperCase;
 		if(args.value.length>0 && !useUser){
 			start = args.value[0];
