@@ -18,3 +18,8 @@ OR
 Add it to custom_commands.json with the file key being the script to be run
 
 Look at the example-command already in there
+
+* Proper comments       ☐
+* Proper error handling ☐
+* Pretty code ☐
+* Works ☑
