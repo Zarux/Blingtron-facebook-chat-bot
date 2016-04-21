@@ -1,7 +1,8 @@
 {
 	"!custom-example":{
 		"file":"testCommand.js",
-		"desc":"asdasd"
+		"desc":"asdasd",
+		"inuse":false
 	},
 	"!talk":{
 		"file":"markovChain.js",

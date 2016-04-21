@@ -50,16 +50,17 @@ function doLogin(loginData){
 	      logLevel:"silent"
 
 	    });
-	    cmdM['meta']['api'] = api;
+	    var bot_config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
+	    cmdM.meta.api = api;
+	    cmdM.meta.admins = bot_config.admins;
 	    uf.metaData.meta.api = api;
-	 
+	    
 	 	log.info("Begin listening for messages");
 	    var listening = api.listen(function(err, event) {
 	    	//console.log(event);
 	        if(err) return console.error(err);
 			switch(event.type) {
 			  case "message":
-			  	
 	  			var serverMsg    = "";
 	  			var eventStrtime = strftime('%F %T', new Date(event.timestamp*1));
 	  			//console.log(event);
@@ -100,8 +101,6 @@ function doLogin(loginData){
 				    	});
 			    	}
 			    }
-			   
-			    
 			    break;
 			  case "event":
 			  	var serverMsg    = "";
@@ -118,8 +117,6 @@ function doLogin(loginData){
 	    });
 	});
 }
-
-
 function parseArgs(args,cmd){
 	var arguments = {};
 	arguments['special']=[];
@@ -143,6 +140,3 @@ function parseArgs(args,cmd){
 	}
 	return arguments;
 }
-
-
-
