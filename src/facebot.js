@@ -95,11 +95,12 @@ function doLogin(loginData){
 			    	
 			    	if(cmdM[cmd] && cmdM[cmd].run){
 			    		cmdM[cmd].run(event.threadID,arguments,event.senderID);
+	    		 		api.markAsRead(event.threadID, function(err) {
+							if(err) console.log(err);
+				    	});
 			    	}
 			    }
-			    /*api.markAsRead(event.threadID, function(err) {
-			      if(err) console.log(err);
-			    });*/
+			   
 			    
 			    break;
 			  case "event":
