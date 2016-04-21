@@ -50,11 +50,11 @@ function doLogin(loginData){
 	      logLevel:"silent"
 
 	    });
-	    var bot_config = JSON.parse(fs.readFileSync('config.json', 'utf8'))
+	    var bot_config = JSON.parse(fs.readFileSync('src/config.json', 'utf8'))
 	    cmdM.meta.api = api;
 	    cmdM.meta.admins = bot_config.admins;
 	    uf.metaData.meta.api = api;
-	    
+
 	 	log.info("Begin listening for messages");
 	    var listening = api.listen(function(err, event) {
 	    	//console.log(event);
