@@ -17,6 +17,7 @@ module.exports = function(threadID, args, senderId){
 	def.first(function(data) {
 		if(!data){
 			uf.sendMessage("Nothing found",threadID);
+			return
 		}
 		var message = ""
 	    message+=data.word.capitalizeFirstLetter()+"\n\n";
