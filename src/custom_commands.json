@@ -7,5 +7,9 @@
 	"!talk":{
 		"file":"markovChain.js",
 		"desc":"Generate markovChain from previous conversation"
+	},
+	"!urban":{
+		"file":"urbanDictionary.js",
+		"desc":"Look up definition from urbanDictionary"
 	}
 }
