@@ -35,13 +35,13 @@ module.exports = function(threadID, args, senderId){
 		}
 
 		if(result.div[0].class=="meaning" && result.div[0].content){
-			message+=result.div[0].content.capitalizeFirstLetter()+"\n";
+			message+=result.div[0].content.capitalizeFirstLetter().replace("&#39;","'")+"";
 		}else{
 			message+="";
 		}
 
 		if(result.div[1].class=="example" && result.div[1].content){
-			message+=result.div[1].content.capitalizeFirstLetter()+"\n";
+			message+=result.div[1].content.capitalizeFirstLetter().replace("&#39;","'")+"";
 		}else{
 			message+="";
 		}
