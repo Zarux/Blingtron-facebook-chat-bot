@@ -6,10 +6,14 @@
 	},
 	"!talk":{
 		"file":"markovChain.js",
-		"desc":"Generate markovChain from previous conversation"
+		"desc":"Generate markovChain from previous conversation", 
+		"help":"!talk [startword] [--rand] [--user \"name\"]",
+		"inuse":true
 	},
 	"!urban":{
 		"file":"urbanDictionary.js",
-		"desc":"Look up definition from urbanDictionary"
+		"desc":"Look up definition from urbanDictionary",
+		"help":"!urban [word] [--rand]",
+		"inuse":true
 	}
 }

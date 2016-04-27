@@ -1,20 +1,23 @@
 var uf      = require("../src/util_functions.js");
 var request = require("request");
+var urban = require('urban');
 
 
 module.exports = function(threadID, args, senderId){
 
 	var term = "";
+	var def;
 	if(args.value.length>0){
 		term = args.value[0];
+		var def = urban(term);
 	}else{
-		console.log(args);
-		return;
+		def = urban.random();
 	}
-	var urban = require('urban');
-	var def = urban(term);
 
 	def.first(function(data) {
+		if(!data){
+			return
+		}
 		var message = ""
 	    message+=data.word.capitalizeFirstLetter()+"\n\n";
 	    message+=data.definition.capitalizeFirstLetter()+"\n\n";
