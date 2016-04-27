@@ -474,7 +474,7 @@ for(cmd in custom_commands){
 	if(custom_commands[cmd].file){
 		cm.run=function(threadID,args,senderID){
 			try{
-				var doRun = require("../custom_commands/"+custom_commands[cmd].file);
+				var doRun = require("../custom_commands/"+custom_commands[args.cmd].file);
 				doRun(threadID,args,senderID);
 			}catch(e){
 				var message = uf.prettifyMessage(null,strftime('%F %T'),"DEBUG",e.message);
