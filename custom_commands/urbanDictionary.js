@@ -7,6 +7,7 @@ module.exports = function(threadID, args, senderId){
 	var term = "";
 	if(args.value.length>0){
 		term = args.value[0];
+		term.replace(" ","+");
 	}else{
 		console.log(args);
 		return;
