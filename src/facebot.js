@@ -51,8 +51,6 @@ function doLogin(loginData){
 
 	    });
 	    var bot_config = JSON.parse(fs.readFileSync('src/config.json', 'utf8'));
-	    var cachedConvos = JSON.parse(fs.readFileSync('cache/cached_convos.json', 'utf8'));
-
 	    cmdM.meta.api = api;
 	    cmdM.meta.admins = bot_config.admins;
 	    uf.metaData.meta.api = api;
