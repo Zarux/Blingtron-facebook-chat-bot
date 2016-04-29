@@ -57,7 +57,6 @@ function doLogin(loginData){
 	    cmdM.meta.admins = bot_config.admins;
 	    uf.metaData.meta.api = api;
 	    uf.metaData.meta.admins = bot_config.admins;
-	    uf.metaData.cachedConvos = cachedConvos;
 
 	 	log.info("Begin listening for messages");
 	    var listening = api.listen(function(err, event) {
