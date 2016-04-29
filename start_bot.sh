@@ -11,5 +11,12 @@ then
 	(cd node_modules && rm -rf facebook-chat-api && git clone https://github.com/Schmavery/facebook-chat-api.git)
 	(cd node_modules/facebook-chat-api && rm -rf .git)
 fi
+
+if [[ $1 == 'clearcache' ]]
+then
+	(cd images/hs && rm *)
+	(cd cache && echo "{}" > cached_images.json )
+fi
+
 (cd node_modules/facebook-chat-api && npm update)
 node src/facebot.js

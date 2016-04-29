@@ -50,7 +50,7 @@ module.exports=function(threadID, args, senderId){
 		  	var fileName = "hs/"+cardId+suffix;
 		  	if(cachedImages[cardId] != undefined && uf.getFilesize("images/"+cachedImages[cardId])>1){
 		  		var message = {
-		 			attachment: fs.createReadStream(fileName),
+		 			attachment: fs.createReadStream("images/"+fileName),
 		 			body: ""
 				};
 				uf.sendMessage(message, threadID);
