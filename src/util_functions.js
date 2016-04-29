@@ -8,8 +8,10 @@ var log = require('npmlog');
 
 var command = {
 	meta :{
-		api: null
-	}
+		api: null,
+		admins:[]
+	},
+	cachedConvos:null
 }
 
 String.prototype.replaceAt=function(index, character) {
@@ -60,7 +62,7 @@ function getSpecialValue(arg, args){
 	return specialValue;
 }
 
-function sendPhotoFromUrl(threadID, msg, imgurl, fileName, error){
+function sendPhotoFromUrl(threadID, msg, imgurl, fileName, error,keep){
 	var api = command.meta.api;
 	var fileName = "./images/"+fileName;
 	request(imgurl).on('response',function(response){
@@ -81,7 +83,8 @@ function sendPhotoFromUrl(threadID, msg, imgurl, fileName, error){
 			message['body']+=msg;
 		}
     	sendMessage(message, threadID);
-    	fs.unlink(fileName);
+    	if(keep == undefined || keep!=true)
+    		fs.unlink(fileName);
     	return true;
 	});
 }
@@ -99,6 +102,16 @@ function sendMessage(message, threadID, error){
 	});
 }
 
+function getFilesize(filename) {
+	try{
+		var stats = fs.statSync(filename);
+		var fileSizeInBytes = stats["size"]
+		return fileSizeInBytes
+	}catch(e){
+		return 0;
+	}
+}
+
 module.exports = {
 	prettifyMessage  : prettifyMessage,
 	isInArray        : isInArray,
@@ -106,5 +119,6 @@ module.exports = {
 	getSpecialValue  : getSpecialValue,
 	sendPhotoFromUrl : sendPhotoFromUrl,
 	sendMessage      : sendMessage,
-	metaData         : command
+	metaData         : command,
+	getFilesize      : getFilesize
 }

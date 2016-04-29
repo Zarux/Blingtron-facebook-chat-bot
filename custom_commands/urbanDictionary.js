@@ -1,6 +1,6 @@
 var uf      = require("../src/util_functions.js");
 var request = require("request");
-var urban = require('urban');
+var urban   = require('urban');
 
 
 module.exports = function(threadID, args, senderId){

@@ -1,8 +1,41 @@
 {
-	"!custom-example":{
-		"file":"testCommand.js",
-		"desc":"asdasd",
+	"!title":{
+		"file" : "changeTitle.js",
+		"desc" : "Change title of groupchat",
+		"help" : "!title \"new title\"",
+		"inuse": true
+	},
+	"!hs":{
+		"file" : "HearthStone.js",
+		"desc" : "Send image of HearthStone card",
+		"help" : "!hs\n\"cardname\"\n[--gold]",
+		"inuse": true
+	},
+	"!stock":{
+		"file" : "stock.js",
+		"desc" : "View stockinfo of given symbols",
+		"help" : "!stock\n\"symbols\"\n[--pe]\n[--peg]",
+		"inuse": true
+	},
+	"!quote":{
+		"file" : "quote.js",
+		"desc" : "Sends a random message from the thread",
+		"help" : "!quote\n[--user \"name of sender\"]\n[--img]",
+		"inuse": true
+	},
+	"!cat":{
+		"file" : "catImage.js",
+		"desc" : "Random cat picture",
+		"inuse" : true
+	},
+	"!shutdown":{
+		"file" : "shutdown.js",
 		"inuse":false
+	},
+	"!random":{
+		"file" : "random.js",
+		"desc" : "Random command",
+		"inuse" : true
 	},
 	"!talk":{
 		"file":"markovChain.js",

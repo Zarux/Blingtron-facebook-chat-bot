@@ -1,7 +1,7 @@
 var login    = require("facebook-chat-api");
 var $        = require("jquery");
 var request  = require('request');
-var fs       = require("fs")
+var fs       = require("fs");
 var path     = require('path');
 var strftime = require('strftime');
 var unirest  = require('unirest');
@@ -50,10 +50,14 @@ function doLogin(loginData){
 	      logLevel:"silent"
 
 	    });
-	    var bot_config = JSON.parse(fs.readFileSync('src/config.json', 'utf8'))
+	    var bot_config = JSON.parse(fs.readFileSync('src/config.json', 'utf8'));
+	    var cachedConvos = JSON.parse(fs.readFileSync('cache/cached_convos.json', 'utf8'));
+
 	    cmdM.meta.api = api;
 	    cmdM.meta.admins = bot_config.admins;
 	    uf.metaData.meta.api = api;
+	    uf.metaData.meta.admins = bot_config.admins;
+	    uf.metaData.cachedConvos = cachedConvos;
 
 	 	log.info("Begin listening for messages");
 	    var listening = api.listen(function(err, event) {
