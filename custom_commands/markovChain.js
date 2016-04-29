@@ -44,6 +44,5 @@ function getChain(history,threadID, args, senderId){
 	if(args.value.length>0 && !useUser){
 		start = args.value[0];
 	}
-		console.log(123123);
 	uf.sendMessage(quotes.start(start).end(25).process(),threadID);
 }
