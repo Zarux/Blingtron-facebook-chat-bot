@@ -19,7 +19,6 @@ function getChain(history,threadID, args, senderId){
 			useUser = true;
 		}
 	}
-	console.log(1);
 	for(msg in history){
 		if(history[msg].senderID != "fbid:"+myId && history[msg].body!=undefined && history[msg].type=="message"){
 			if(useUser && history[msg].senderName.toLowerCase()!=user)
@@ -27,14 +26,12 @@ function getChain(history,threadID, args, senderId){
 			historyString+=history[msg].body.toLowerCase().capitalizeFirstLetter()+"\n";
 		}
 	}
-	console.log(2);
 	function useUpperCase(wordList) {
 		var tmpList = Object.keys(wordList).filter(function(word) {
 			return word[0] >= 'A' && word[0] <= 'Z'
 		})
 		return tmpList[~~(Math.random()*tmpList.length)]
 	}
-	console.log(3);
 	function useRandom(wordList) {
 		var tmpList = Object.keys(wordList);
 		return tmpList[~~(Math.random()*tmpList.length)]
@@ -44,7 +41,6 @@ function getChain(history,threadID, args, senderId){
 	if(args.special.indexOf('--rand') > -1){
 		start = useRandom;
 	}
-	console.log(4);
 	if(args.value.length>0 && !useUser){
 		start = args.value[0];
 	}
