@@ -59,6 +59,7 @@ function doLogin(loginData){
 
 	 	log.info("Begin listening for messages");
 	    var listening = api.listen(function(err, event) {
+	    	if(err) return console.error(err);
 	    	var chatUsers = uf.metaData.chatUsers;
 	    	if(chatUsers[event.threadID] == undefined){
 		    	api.getThreadInfo(event.threadID,function(err,info){
@@ -69,7 +70,6 @@ function doLogin(loginData){
 				});
 	    	}
 	    	//console.log(event);
-	        if(err) return console.error(err);
 			switch(event.type) {
 			  case "message":
 	  			var serverMsg    = "";
