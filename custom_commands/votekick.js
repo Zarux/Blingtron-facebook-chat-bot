@@ -32,7 +32,7 @@ module.exports=function(threadID, args, senderId){
 
 					kickData[threadID][userKickedId].votes.push(senderId);
 
-					var voteSize = Object.keys(threadUsers).length;
+					var voteSize = Object.keys(threadUsers).length-1;
 					uf.sendMessage("Registered vote for "+userKicked+"\n"+kickData[threadID][userKickedId].votes.length+"/"+Math.round(voteSize/2),threadID);
 
 					if(kickData[threadID][userKickedId].votes.length >= Math.round(voteSize/2)){
