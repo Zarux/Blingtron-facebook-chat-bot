@@ -11,7 +11,8 @@ var command = {
 		api: null,
 		admins:[]
 	},
-	cachedConvos:null
+	cachedConvos:null,
+	chatUsers:{}
 }
 
 String.prototype.replaceAt=function(index, character) {
