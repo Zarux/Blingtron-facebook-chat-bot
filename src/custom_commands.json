@@ -48,5 +48,11 @@
 		"desc":"Look up definition from urbanDictionary",
 		"help":"!urban [word] [--rand]",
 		"inuse":true
+	},
+	"!votekick":{
+		"file":"votekick.js",
+		"desc":"Vote to kick user",
+		"help":"Votekick --user \"User\"",
+		"inuse":true
 	}
 }
