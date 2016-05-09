@@ -7,6 +7,7 @@ module.exports=function(threadID, args, senderId){
 	var userKick = senderId;
 	var userKickedId;
 	var userKicked;
+	var myId = api.getCurrentUserID();
 	if(kickData[threadID] == undefined){
 		kickData[threadID] = {}
 	}
@@ -21,6 +22,10 @@ module.exports=function(threadID, args, senderId){
 		for(id in threadUsers){
 			if(threadUsers[id].name.toLowerCase() == user_kicked.toLowerCase()){
 				userKickedId = id;
+				if(myId == id){
+					uf.sendMessage("beep boop. Does not compute. Beep boop",threadID);
+					return
+				}
 				userKicked = threadUsers[id].name;
 
 				if(kickData[threadID][userKickedId] == undefined){
