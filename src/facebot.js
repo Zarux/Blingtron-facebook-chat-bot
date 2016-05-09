@@ -36,6 +36,7 @@ try{
 	});	
 }
 
+
 function doLogin(loginData){
 	login(loginData, function callback (err, api) {
 	    if(err) return console.error(err);
@@ -58,6 +59,15 @@ function doLogin(loginData){
 
 	 	log.info("Begin listening for messages");
 	    var listening = api.listen(function(err, event) {
+	    	var chatUsers = uf.metaData.chatUsers;
+	    	if(chatUsers[event.threadID] == undefined){
+		    	api.getThreadInfo(event.threadID,function(err,info){
+					if(err) return err;
+					api.getUserInfo(info.participantIDs,function(err,users){
+						uf.metaData.chatUsers[event.threadID]=users;
+					});
+				});
+	    	}
 	    	//console.log(event);
 	        if(err) return console.error(err);
 			switch(event.type) {
