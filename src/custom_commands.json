@@ -52,7 +52,7 @@
 	"!votekick":{
 		"file":"votekick.js",
 		"desc":"Vote to kick user",
-		"help":"Votekick --user \"User\"",
+		"help":"Votekick --user \"User\" --forgive --votes",
 		"inuse":true
 	}
 }

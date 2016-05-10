@@ -27,13 +27,13 @@ module.exports=function(threadID, args, senderId){
 		return
 	}
 
+
+
 	if(args.special.indexOf("--user") > -1){
 		if(args.special_value.length==0){
 			uf.sendMessage(threadID,"No user specified");
 			return;
 		}
-
-
 		user_kicked = uf.getSpecialValue("--user",args);
 		for(id in threadUsers){
 			if(threadUsers[id].name.toLowerCase() == user_kicked.toLowerCase()){
@@ -44,11 +44,23 @@ module.exports=function(threadID, args, senderId){
 				}
 				userKicked = threadUsers[id].name;
 
+
+
 				if(kickData[threadID][userKickedId] == undefined){
 					kickData[threadID][userKickedId] = {votes:[],name:""}
 				}
 				var cur = kickData[threadID][userKickedId];
 				cur.name = userKicked;
+
+				if(args.special.indexOf("--forgive") > -1){
+					if(cur.votes.indexOf(senderId) > -1){
+						cur.votes.splice(cur.votes.indexOf(senderId),1);
+						uf.sendMessage("Registered forgive for:\n"+userKicked+"\n"+cur.votes.length+"/"+Math.round(voteSize/2),threadID);
+					}else{
+						uf.sendMessage("You have not voted to kick that user",threadID);
+					}
+					return;
+				}
 
 				if(cur.votes.indexOf(senderId) == -1){
 
