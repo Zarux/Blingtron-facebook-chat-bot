@@ -17,7 +17,7 @@ module.exports=function(threadID, args, senderId){
 		var msg = "";
 		for(i in kickData[threadID]){
 			var cur = kickData[threadID];
-			msg+=cur[i].name+" "+cur[i].votes.length+"/"+voteSize/2+"\n";
+			msg+=cur[i].name+" "+cur[i].votes.length+"/"+Math.round(voteSize/2)+"\n";
 		}
 		if(msg==""){
 			uf.sendMessage("No votes registered",threadID);			
