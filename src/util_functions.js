@@ -113,6 +113,40 @@ function getFilesize(filename) {
 	}
 }
 
+
+function getEditDistance(a, b){
+  if(a.length == 0) return b.length; 
+  if(b.length == 0) return a.length; 
+
+  var matrix = [];
+
+  // increment along the first column of each row
+  var i;
+  for(i = 0; i <= b.length; i++){
+    matrix[i] = [i];
+  }
+
+  // increment each column in the first row
+  var j;
+  for(j = 0; j <= a.length; j++){
+    matrix[0][j] = j;
+  }
+
+  // Fill in the rest of the matrix
+  for(i = 1; i <= b.length; i++){
+    for(j = 1; j <= a.length; j++){
+      if(b.charAt(i-1) == a.charAt(j-1)){
+        matrix[i][j] = matrix[i-1][j-1];
+      } else {
+        matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+                                Math.min(matrix[i][j-1] + 1, // insertion
+                                         matrix[i-1][j] + 1)); // deletion
+      }
+    }
+  }
+  return matrix[b.length][a.length];
+};
+
 function findMostLikelyName(threadID,name){
 	var users = command.chatUsers[threadID];
 	if(users == undefined){
@@ -152,14 +186,29 @@ function findMostLikelyName(threadID,name){
     	return self.indexOf(value) == index;
 	});
 
-	if(unique_users.length == 0){
-		return false;
-	}else if(unique_users.length == 1){
+	if(unique_users.length == 1){
 		return unique_users[0];
-	}else{
-		return unique_users;
+	}else if(unique_users.length == 0){
+		var higest_edit_dist = 1024;
+		for(i in justNames){
+			var cur_edit_dist = getEditDistance(name,justNames[i]);
+			if(cur_edit_dist<=higest_edit_dist){
+				higest_edit_dist = cur_edit_dist;
+				likelyUsers.push(justNames[i]);
+			}
+		}
+		if(likelyUsers.length==1){
+			return likelyUsers[0];
+		}
+		else if(likelyUsers.length==0){
+			return false
+		}
+		return likelyUsers
 	}
+
+	return unique_users;
 }
+
 
 module.exports = {
 	prettifyMessage   : prettifyMessage,
