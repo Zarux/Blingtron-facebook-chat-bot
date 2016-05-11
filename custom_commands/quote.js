@@ -93,17 +93,14 @@ function getQuote(history,threadID, args, senderId){
 		uf.sendMessage("Could not find that user",threadID);
 		return true;
 	}else if(typeof user != "string" && user.length>1){
-		var msg ="";
-		for(i in user){
-			msg+=user+"\n";
-		}
-		uf.sendMessage("More than one user found\n"+msg,threadID);
+		uf.sendMessage("More than one user found\n"+user,threadID);
 		return true;
-	}
-	for (var i = 0; i < history.length; i++) {
-		var done = getRandomMessage(count,user);
-		if(done){
-			break;
+	}else{
+		for (var i = 0; i < history.length; i++) {
+			var done = getRandomMessage(count,user);
+			if(done){
+				break;
+			}
 		}
 	}
 }
