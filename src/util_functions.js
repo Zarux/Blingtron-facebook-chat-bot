@@ -148,6 +148,9 @@ function getEditDistance(a, b){
 };
 
 function findMostLikelyName(threadID,name){
+	if(name == undefined){
+		return 2;
+	}
 	var users = command.chatUsers[threadID];
 	if(users == undefined){
 		return name
