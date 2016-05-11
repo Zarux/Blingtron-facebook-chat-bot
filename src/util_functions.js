@@ -199,7 +199,7 @@ function findMostLikelyName(threadID,name){
 			cur_edit_dist = cur_edit_dist/justNames[i].length;
 			if(cur_edit_dist<lowest_edit_dist){
 				lowest_edit_dist = cur_edit_dist;
-				likelyUsers=justNames[i];
+				likelyUser=justNames[i];
 			}
 		}
 		return likelyUser;
