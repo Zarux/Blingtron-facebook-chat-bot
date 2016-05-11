@@ -189,15 +189,18 @@ function findMostLikelyName(threadID,name){
 	if(unique_users.length == 1){
 		return unique_users[0];
 	}else if(unique_users.length == 0){
-		var higest_edit_dist = 1024;
+		var lowest_edit_dist = 1024;
+		var likelyUser = false;
 		for(i in justNames){
 			var cur_edit_dist = getEditDistance(name,justNames[i]);
-			if(cur_edit_dist<higest_edit_dist){
-				higest_edit_dist = cur_edit_dist;
+			console.log(cur_edit_dist,lowest_edit_dist);
+			console.log(name,justNames[i]);
+			if(cur_edit_dist<lowest_edit_dist){
+				lowest_edit_dist = cur_edit_dist;
 				likelyUsers=justNames[i];
 			}
 		}
-		return likelyUsers
+		return likelyUser;
 	}
 
 	return unique_users;
