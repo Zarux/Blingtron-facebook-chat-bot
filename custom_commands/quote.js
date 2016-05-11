@@ -41,7 +41,7 @@ function getQuote(history,threadID, args, senderId){
 	}
 	var count = [];
 	//fs.writeFile('./dump1.txt', JSON.stringify(history, null, 2) , 'utf-8');
-	function getRandomMessage(count){
+	function getRandomMessage(count,user){
 		var idx     = uf.getRandomInt(0,history.length);
 		var message = {body: ""};
 		var quote   = history[idx].body;
@@ -63,7 +63,6 @@ function getQuote(history,threadID, args, senderId){
 			return false;
 		}
 		if(args.special.indexOf('--user') > -1){
-			var user = uf.getSpecialValue("--user",args);
 			if(history[idx].senderName.toLowerCase() != user.toLowerCase()){
 				return false;
 			}
@@ -88,8 +87,21 @@ function getQuote(history,threadID, args, senderId){
 		uf.sendMessage(message,threadID);
 		return true;	
 	}
+	var user = uf.getSpecialValue("--user",args);
+	var user = uf.findMostLikelyName(threadID,user);
+	if(!user){
+		uf.sendMessage("Could not find that user",threadID);
+		return true;
+	}else if(typeof user != "string" && user.length>1){
+		var msg ="";
+		for(i in user){
+			msg+=user+"\n";
+		}
+		uf.sendMessage("More than one user found\n"+msg,threadID);
+		return true;
+	}
 	for (var i = 0; i < history.length; i++) {
-		var done = getRandomMessage(count);
+		var done = getRandomMessage(count,user);
 		if(done){
 			break;
 		}

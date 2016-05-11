@@ -18,6 +18,18 @@ function getChain(history,threadID, args, senderId){
 		if(user!=undefined){
 			useUser = true;
 		}
+		var user = uf.findMostLikelyName(threadID,user);
+		if(!user){
+			uf.sendMessage("Could not find that user",threadID);
+			return true;
+		}else if(typeof user != "string" && user.length>1){
+			var msg ="";
+			for(i in user){
+				msg+=user+"\n";
+			}
+			uf.sendMessage("More than one user found\n"+msg,threadID);
+			return true;
+		}
 	}
 	for(msg in history){
 		if(history[msg].senderID != "fbid:"+myId && history[msg].body!=undefined && history[msg].type=="message"){

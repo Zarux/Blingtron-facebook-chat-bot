@@ -13,21 +13,6 @@ module.exports=function(threadID, args, senderId){
 	if(kickData[threadID] == undefined){
 		kickData[threadID] = {}
 	}
-	if(args.special.indexOf("--votes") > -1){
-		var msg = "";
-		for(i in kickData[threadID]){
-			var cur = kickData[threadID];
-			msg+=cur[i].name+" "+cur[i].votes.length+"/"+Math.round(voteSize/2)+"\n";
-		}
-		if(msg==""){
-			uf.sendMessage("No votes registered",threadID);			
-		}else{
-			uf.sendMessage(msg,threadID);
-		}
-		return
-	}
-
-
 
 	if(args.special.indexOf("--user") > -1){
 		if(args.special_value.length==0){
@@ -35,6 +20,19 @@ module.exports=function(threadID, args, senderId){
 			return;
 		}
 		user_kicked = uf.getSpecialValue("--user",args);
+		var user_kicked = uf.findMostLikelyName(threadID,user_kicked);
+		if(!user_kicked){
+			uf.sendMessage("Could not find that user",threadID);
+			return true;
+		}else if(typeof user_kicked != "string" && user_kicked.length>1){
+			var msg ="";
+			for(i in user_kicked){
+				msg+=user_kicked+"\n";
+			}
+			uf.sendMessage("More than one user found\n"+msg,threadID);
+			return true;
+		}
+		
 		for(id in threadUsers){
 			if(threadUsers[id].name.toLowerCase() == user_kicked.toLowerCase()){
 				userKickedId = id;
@@ -43,8 +41,6 @@ module.exports=function(threadID, args, senderId){
 					return
 				}
 				userKicked = threadUsers[id].name;
-
-
 
 				if(kickData[threadID][userKickedId] == undefined){
 					kickData[threadID][userKickedId] = {votes:[],name:""}
@@ -83,5 +79,17 @@ module.exports=function(threadID, args, senderId){
 			}
 		}
 		uf.sendMessage("User not found",threadID);
+	}
+	if(args.special.indexOf("--votes") > -1){
+		var msg = "";
+		for(i in kickData[threadID]){
+			var cur = kickData[threadID];
+			msg+=cur[i].name+" "+cur[i].votes.length+"/"+Math.round(voteSize/2)+"\n";
+		}
+		if(msg==""){
+			uf.sendMessage("No votes registered",threadID);			
+		}else{
+			uf.sendMessage(msg,threadID);
+		}
 	}
 }

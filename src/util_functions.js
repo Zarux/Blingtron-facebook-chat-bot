@@ -113,13 +113,62 @@ function getFilesize(filename) {
 	}
 }
 
+function findMostLikelyName(threadID,name){
+	var users = command.chatUsers[threadID];
+	if(users == undefined){
+		return name
+	}
+	var justNames = [];
+	var likelyUsers = [];
+	var name = name.toLowerCase();
+
+	for(id in users){
+		var cur = users[id];
+		var name_user = cur.name.toLowerCase();
+		justNames.push(name_user);
+	}
+	if(justNames.indexOf(name.toLowerCase()) > -1){
+		return name;
+	}
+	for(i in justNames){
+		var name_user = justNames[i].toLowerCase();
+		var name_user_split = name_user.split(" ");
+		var name_split = name.split(" ");
+		var allbreak = false;
+		for(i in name_user_split){
+			for(j in name_split){
+				if(name_user_split[i]==name_split[j]){
+					likelyUsers.push(name_user);
+					allbreak = true;
+					break;
+				}
+			}
+			if(allbreak){
+				break;
+			}
+		}
+	}
+	var unique_users = likelyUsers.filter(function onlyUnique(value, index, self) { 
+    	return self.indexOf(value) == index;
+	});
+
+	if(unique_users.length == 0){
+		return false;
+	}else if(unique_users.length == 1){
+		return unique_users[0];
+	}else{
+		return unique_users;
+	}
+}
+
 module.exports = {
-	prettifyMessage  : prettifyMessage,
-	isInArray        : isInArray,
-	getRandomInt     : getRandomInt,
-	getSpecialValue  : getSpecialValue,
-	sendPhotoFromUrl : sendPhotoFromUrl,
-	sendMessage      : sendMessage,
-	metaData         : command,
-	getFilesize      : getFilesize
+	prettifyMessage   : prettifyMessage,
+	isInArray         : isInArray,
+	getRandomInt      : getRandomInt,
+	getSpecialValue   : getSpecialValue,
+	sendPhotoFromUrl  : sendPhotoFromUrl,
+	sendMessage       : sendMessage,
+	metaData          : command,
+	getFilesize       : getFilesize,
+	findMostLikelyName: findMostLikelyName
 }
