@@ -4,13 +4,6 @@ if [[ $1 == 'pull' ]]
 then
 	git pull
 fi
-if [[ $1 == 'full' ]]
-then
-	git pull
-	(cd node_modules && npm update)
-	(cd node_modules && rm -rf facebook-chat-api && git clone https://github.com/Schmavery/facebook-chat-api.git)
-	(cd node_modules/facebook-chat-api && rm -rf .git)
-fi
 
 if [[ $1 == 'clearcache' ]]
 then
@@ -18,5 +11,5 @@ then
 	(cd cache && echo "{}" > cached_images.json )
 fi
 
-(cd node_modules/facebook-chat-api && npm update)
+npm update
 node src/facebot.js
