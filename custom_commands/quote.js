@@ -62,7 +62,7 @@ function getQuote(history,threadID, args, senderId){
 		if (history[idx].senderID == "fbid:"+api.getCurrentUserID()){
 			return false;
 		}
-		if(args.special.indexOf('--user') > -1){
+		if(args.special.indexOf('--user') > -1 && user != undefined && user != ""){
 			if(history[idx].senderName.toLowerCase() != user.toLowerCase()){
 				return false;
 			}
@@ -87,8 +87,8 @@ function getQuote(history,threadID, args, senderId){
 		uf.sendMessage(message,threadID);
 		return true;	
 	}
-	var user = uf.getSpecialValue("--user",args);
-	var user = uf.findMostLikelyName(threadID,user);
+	var getuser = uf.getSpecialValue("--user",args);
+	var user = uf.findMostLikelyName(threadID,getuser);
 	if(!user){
 		uf.sendMessage("Could not find that user",threadID);
 		return true;

@@ -17,7 +17,7 @@ var rl = readline.createInterface({
 });
 
 process.chdir(path.dirname(fs.realpathSync(__dirname)));
-var loginData;
+var loginData = {"email":"","password":""};
 try{
 	loginData = {appState: JSON.parse(fs.readFileSync('appstate.json', 'utf8'))};
 	log.info("Using appstate.json");
@@ -25,15 +25,23 @@ try{
 }catch(e){
 	var email, pw;
 	log.info("Using email and password");
+	getEmail()
+}
+
+function getEmail(){
 	rl.question('Email: ', (answer) => {
 		email = answer;
-			rl.question('Password: ', (answer2) => {
-				pw = answer2;
-				loginData = {email: email, password: pw};
-				doLogin(loginData);
-				rl.close();
-		});
-	});	
+		loginData.email = email;
+		getPw();
+	});
+}
+
+function getPw(){
+	rl.question('Password: ', (answer) => {
+		loginData.password = answer;
+		doLogin(loginData);
+		rl.close();
+	});
 }
 
 

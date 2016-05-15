@@ -14,12 +14,13 @@ function getChain(history,threadID, args, senderId){
 	var useUser = false;
 	var myId = api.getCurrentUserID();
 	if(args.special.indexOf('--user') > -1){
-		var user = uf.getSpecialValue("--user",args).toLowerCase();
+		var user = uf.getSpecialValue("--user",args);
 		if(user!=undefined){
 			useUser = true;
 		}
-		var user = uf.findMostLikelyName(threadID,user);
-		if(!user){
+
+		user = uf.findMostLikelyName(threadID,user);
+		if(!user && useUser && user!=""){
 			uf.sendMessage("Could not find that user",threadID);
 			return true;
 		}else if(typeof user != "string" && user.length>1){
@@ -29,7 +30,7 @@ function getChain(history,threadID, args, senderId){
 	}
 	for(msg in history){
 		if(history[msg].senderID != "fbid:"+myId && history[msg].body!=undefined && history[msg].type=="message"){
-			if(useUser && history[msg].senderName.toLowerCase()!=user)
+			if(useUser && history[msg].senderName.toLowerCase()!=user.toLowerCase())
 				continue;
 			historyString+=history[msg].body.toLowerCase().capitalizeFirstLetter()+"\n";
 		}
