@@ -1,0 +1,19 @@
+{
+  "name": "Blingtron-facebook-chat-bot",
+  "version": "0.0.1",
+  "description": "Modular facebook chat bot",
+  "main": "src/facebot.js",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "bash start_bot.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zarux/Blingtron-facebook-chat-bot"
+  },
+  "keywords": ["facebook","chat","bot"],
+  "author": "Joakim Tangnes",
+  "license": "MIT"
+}
