@@ -1,5 +1,4 @@
 var login = require("facebook-chat-api");
-var $ = require("jquery");
 var request = require('request');
 var fs = require("fs")
 var strftime = require('strftime');

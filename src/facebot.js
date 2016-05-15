@@ -1,5 +1,4 @@
 var login    = require("facebook-chat-api");
-var $        = require("jquery");
 var request  = require('request');
 var fs       = require("fs");
 var path     = require('path');
@@ -23,15 +22,13 @@ try{
 	log.info("Using appstate.json");
 	doLogin(loginData);
 }catch(e){
-	var email, pw;
 	log.info("Using email and password");
 	getEmail()
 }
 
 function getEmail(){
 	rl.question('Email: ', (answer) => {
-		email = answer;
-		loginData.email = email;
+		loginData.email = answer;
 		getPw();
 	});
 }

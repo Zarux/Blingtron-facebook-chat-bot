@@ -4,6 +4,13 @@
   "description": "Modular facebook chat bot",
   "main": "src/facebot.js",
   "dependencies": {
+    "facebook-chat-api": "git://github.com/schmavery/facebook-chat-api",
+    "request":"^2.72.0",
+    "strftime":"^0.9.2",
+    "unirest":"^0.5.0",
+    "npmlog":"^2.0.3",
+    "markovchain":"^1.0.2",
+    "urban":"^0.3.1"
   },
   "devDependencies": {},
   "scripts": {
