@@ -30,7 +30,7 @@ error is a function that can be run if sending fails
 Simplified sending message
 
 #### findMostLikelyName(threadID,name)
-Will go through the list of users and find the name that resembles the most
-First it checks if there is a matching name, if not it will compare all parts of the name
+Will go through the list of users and find the name that resembles the most.
+First it checks if there is a matching name, if not it will compare all parts of the name.
 If still no match it will check for the closest using levenshtein distance.
-So you can do !quote --user John, and it will most likely match for user Johnny Bravo
+
