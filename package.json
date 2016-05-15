@@ -1,6 +1,6 @@
 {
   "name": "Blingtron-facebook-chat-bot",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Modular facebook chat bot",
   "main": "src/facebot.js",
   "dependencies": {
