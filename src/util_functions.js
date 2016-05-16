@@ -15,16 +15,15 @@ var command = {
 }
 
 String.prototype.replaceAt=function(index, character) {
-    return this.substr(0, index) + character + this.substr(index+character.length);
+	return this.substr(0, index) + character + this.substr(index+character.length);
 }
 String.prototype.capitalizeFirstLetter = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+	return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 function isInArray(haystack,needle){
 	return haystack.indexOf(needle) > -1;
 }
-
 
 function prettifyMessage(type,time,sender,mesg){
 	var message="";
@@ -76,16 +75,16 @@ function sendPhotoFromUrl(threadID, msg, imgurl, fileName, error,keep){
 		}
 	}).pipe(fs.createWriteStream(fileName)).on('close',function(){
 		var message = {
- 			attachment: fs.createReadStream(fileName),
- 			body: ""
+			attachment: fs.createReadStream(fileName),
+			body: ""
 		};
 		if(msg){
 			message['body']+=msg;
 		}
-    	sendMessage(message, threadID);
-    	if(keep == undefined || keep!=true)
-    		fs.unlink(fileName);
-    	return true;
+		sendMessage(message, threadID);
+		if(keep == undefined || keep!=true)
+			fs.unlink(fileName);
+		return true;
 	});
 }
 
@@ -114,36 +113,36 @@ function getFilesize(filename) {
 
 
 function getEditDistance(a, b){
-  if(a.length == 0) return b.length; 
-  if(b.length == 0) return a.length; 
+	if(a.length == 0) return b.length; 
+	if(b.length == 0) return a.length; 
 
-  var matrix = [];
+	var matrix = [];
 
-  // increment along the first column of each row
-  var i;
-  for(i = 0; i <= b.length; i++){
-    matrix[i] = [i];
-  }
+	// increment along the first column of each row
+	var i;
+	for(i = 0; i <= b.length; i++){
+	matrix[i] = [i];
+	}
 
-  // increment each column in the first row
-  var j;
-  for(j = 0; j <= a.length; j++){
-    matrix[0][j] = j;
-  }
+	// increment each column in the first row
+	var j;
+	for(j = 0; j <= a.length; j++){
+	matrix[0][j] = j;
+	}
 
-  // Fill in the rest of the matrix
-  for(i = 1; i <= b.length; i++){
-    for(j = 1; j <= a.length; j++){
-      if(b.charAt(i-1) == a.charAt(j-1)){
-        matrix[i][j] = matrix[i-1][j-1];
-      } else {
-        matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
-                                Math.min(matrix[i][j-1] + 1, // insertion
-                                         matrix[i-1][j] + 1)); // deletion
-      }
-    }
-  }
-  return matrix[b.length][a.length];
+	// Fill in the rest of the matrix
+	for(i = 1; i <= b.length; i++){
+	for(j = 1; j <= a.length; j++){
+		if(b.charAt(i-1) == a.charAt(j-1)){
+		matrix[i][j] = matrix[i-1][j-1];
+		} else {
+		matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+								Math.min(matrix[i][j-1] + 1, // insertion
+										 matrix[i-1][j] + 1)); // deletion
+		}
+	}
+	}
+	return matrix[b.length][a.length];
 };
 
 function findMostLikelyName(threadID,name){
@@ -185,7 +184,7 @@ function findMostLikelyName(threadID,name){
 		}
 	}
 	var unique_users = likelyUsers.filter(function onlyUnique(value, index, self) { 
-    	return self.indexOf(value) == index;
+		return self.indexOf(value) == index;
 	});
 
 	if(unique_users.length == 1){
@@ -209,13 +208,13 @@ function findMostLikelyName(threadID,name){
 
 
 module.exports = {
-	prettifyMessage   : prettifyMessage,
-	isInArray         : isInArray,
-	getRandomInt      : getRandomInt,
-	getSpecialValue   : getSpecialValue,
-	sendPhotoFromUrl  : sendPhotoFromUrl,
-	sendMessage       : sendMessage,
-	metaData          : command,
-	getFilesize       : getFilesize,
+	prettifyMessage	 : prettifyMessage,
+	isInArray		 : isInArray,
+	getRandomInt	 : getRandomInt,
+	getSpecialValue	 : getSpecialValue,
+	sendPhotoFromUrl : sendPhotoFromUrl,
+	sendMessage		 : sendMessage,
+	metaData		 : command,
+	getFilesize		 : getFilesize,
 	findMostLikelyName: findMostLikelyName
 }
