@@ -41,7 +41,6 @@ function getPw(){
 }
 
 var lastCheckUsers = {}
-
 function doLogin(loginData){
 	login(loginData, function callback (err, api) {
 		if(err) return console.error(err);
@@ -63,7 +62,10 @@ function doLogin(loginData){
 
 		log.info("Begin listening for messages");
 		var listening = api.listen(function(err, event) {
-			if(err) return console.error(err);
+			if(err){
+				console.log(err);
+				process.exit(1);
+			}
 			var chatUsers = uf.metaData.chatUsers;
 			var timeNow = Math.floor(Date.now() / 1000);
 			if(chatUsers[event.threadID] == undefined || lastCheckUsers[event.threadID] < timeNow - 600 ){

@@ -12,4 +12,4 @@ then
 fi
 
 npm update
-node src/facebot.js
+(nodemon || echo "nodemon recommended: npm install nodemon -g\n" && node src/facebot.js)
