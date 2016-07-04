@@ -63,7 +63,7 @@ function doLogin(loginData){
 		log.info("Begin listening for messages");
 		var listening = api.listen(function(err, event) {
 			if(err){
-				console.log(err);
+				console.log("Listen",err);
 				process.exit(1);
 			}
 			var chatUsers = uf.metaData.chatUsers;
@@ -71,7 +71,10 @@ function doLogin(loginData){
 			if(chatUsers[event.threadID] == undefined || lastCheckUsers[event.threadID] < timeNow - 600 ){
 				lastCheckUsers[event.threadID] == undefined ? lastCheckUsers[event.threadID] = 0 : lastCheckUsers[event.threadID] = timeNow;
 				api.getThreadInfo(event.threadID,function(err,info){
-					if(err) return err;
+					if(err){
+						console.log("getThreadInfo",err);
+						process.exit(1);
+					}
 					api.getUserInfo(info.participantIDs,function(err,users){
 						uf.metaData.chatUsers[event.threadID]=users;
 					});
@@ -82,7 +85,10 @@ function doLogin(loginData){
 					var serverMsg	= "";
 					var eventStrtime = strftime('%F %T', new Date(event.timestamp*1));
 					api.getUserInfo(event.senderID,function(err,ret){
-						if(err) return console.error(err);
+						if(err){
+							console.log("getUserInfo",err);
+							process.exit(1);
+						}
 
 						var sender = ret[event.senderID].name;
 						var body	 = event.body;
@@ -122,7 +128,10 @@ function doLogin(loginData){
 					var serverMsg	= "";
 					var eventStrtime = strftime('%F %T');
 					api.getUserInfo(event.author,function(err,ret){
-						if(err) return console.error(err);
+						if(err){
+							console.log("getUserInfo",err);
+							process.exit(1);
+						}
 						serverMsg=uf.prettifyMessage("EVNT",eventStrtime,ret[event.author].name,event.logMessageBody);
 					console.log(serverMsg);
 					});
